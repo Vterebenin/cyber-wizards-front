@@ -1,25 +1,54 @@
 import React, { Component } from "react"
 
-class Speech extends Component {
+
+
+class Runefield extends Component {
 
   constructor() {
     super()
     this.state = {
       listening: false
     }
-    this.refs = React.createRef();
     this.coords = [];
-    
+
   }
 
   componentDidMount() {
-    this.ctx = this.refs.myCanvas.getContext("2d");
-    console.log(this.ctx);
+    this.canvas = this.refs.myCanvas;
+    this.ctx = this.canvas.getContext("2d");
     this.ctxCoor = this.refs.myCanvas.getBoundingClientRect();
+    let ctx = this.canvas.getContext("2d");
+    this.raf = "";
+    this.sline = {
+      x: 100,
+      y: 100,
+      vx: 5,
+      vy: 1,
+      radius: 25,
+      color: 'blue',
+      draw(fromX, fromY) {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.moveTo(fromX, fromY);
+        ctx.lineTo(this.x, this.y);
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+    }
+    this.historyObj = {
+      history: [],
+      canvas: null
+    }
+
+  }
+
+  clear() {
+    // let reloadData = JSON.parse(this.historyObj.history[0]);
+    // let ctx = this.historyObj.canvas.getContext('2d');
+    // ctx.putImageData(reloadData, 0, 0);
   }
 
   drawLine(x_first, y_first, x_second, y_second) {
-    this.ctx.stroke();
     this.ctx.beginPath();
     this.ctx.moveTo(x_first, y_first);
     this.ctx.lineTo(x_second, y_second);
@@ -34,20 +63,22 @@ class Speech extends Component {
     this.ctx.fill();
   }
 
-  showLine(x_first, y_first, x_second, y_second) {
-    this.ctx.beginPath();
-    this.ctx.moveTo(x_first, y_first);
-    this.ctx.lineTo(x_second, y_second);
-    this.ctx.lineWidth = 2;
-  }
-
   getCoords(e) {
 
+    // this.historyObj.canvas = this.canvas;
+    // let historyCtx = this.historyObj.canvas.getContext('2d');
+    // let data = JSON.stringify(historyCtx.getImageData(0, 0, this.historyObj.canvas.width, this.historyObj.canvas.height));
+    // console.log(data);
+
+    
+
     this.drawCircle(e.clientX - this.ctxCoor.left, e.clientY - this.ctxCoor.top, 3);
+    // this.historyObj.history.push(data);
     console.log(e.clientX, e.clientX + this.ctxCoor.left);
     let x1, x2, y1, y2;
     this.coords.push(e.clientX - this.ctxCoor.left, e.clientY - this.ctxCoor.top);
-    
+    console.log(this.coords);
+
     if (this.coords.length === 4) {
 
       x1 = this.coords[0]; x2 = this.coords[2];
@@ -58,23 +89,42 @@ class Speech extends Component {
 
 
       this.drawCircle(perpX, perpY, 3);
-      this.showLine(this.coords[0], this.coords[1], this.coords[2], this.coords[3]);
       this.drawLine(this.coords[0], this.coords[1], this.coords[2], this.coords[3]);
       this.coords = [];
 
+      this.canvas.onmousemove = (e) => {
+        this.clear();
+        this.sline.x = e.clientX;
+        this.sline.y = e.clientY;
+        this.sline.draw(this.coords[0], this.coords[1]);
+      }
+
     }
   }
-  
+
+  preCastLine(e) {
+
+  }
+
+  restoreCanvas() {
+
+  }
+
+
   render() {
     return (
-      <canvas ref="myCanvas" onClick={(event) => this.getCoords(event)} onMouseDown={(event) => this.getCoords(event)} style={{ "border": "1px solid #c6c6c6" }}  width="500" height="500">
-
+      <canvas
+        ref="myCanvas"
+        onMouseDown={(e) => this.restoreCanvas(e)}
+        onClick={(e) => this.getCoords(e)}
+        style={{ "border": "1px solid #c6c6c6" }}
+        width="500" height="500">
       </canvas>
     )
   }
 }
 
-export default Speech
+export default Runefield
 
 
 //-------------------------CSS------------------------------------
