@@ -1,12 +1,19 @@
-import React from "react"
+import React, { Component } from "react"
 import './castingButton.css';
 
-const castingButton = () => {
-  return (
-    <div className="b-castingButton">
-      Start Casting!
-    </div>
-  );
+class castingButton extends Component {
+
+  
+
+  render() {
+    return (
+      <div 
+        className="b-castingButton"
+        onClick={this.props.onCasting}>
+        {this.props.text}
+      </div>
+    );
+  }
 };
 
 export default castingButton;

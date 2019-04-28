@@ -76,7 +76,11 @@ a:hover {
   padding: 0;
 }
 
-.patt-holder{background:#3382c0;  -ms-touch-action: none;}
+.patt-holder{
+  background:#3382c0; 
+   -ms-touch-action: none;
+   touch-action: none;
+}
 .patt-wrap{position:relative; cursor:pointer;}
 .patt-wrap ul, .patt-wrap li{
 	list-style: none;
@@ -122,3 +126,5 @@ a:hover {
 .patt-hidden .patt-lines{
 	display:none;
 }
+
+/* ----------------- */

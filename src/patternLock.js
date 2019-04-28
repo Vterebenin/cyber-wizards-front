@@ -1,5 +1,3 @@
-'use strict';
-
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
@@ -313,9 +311,21 @@ var PatternLock = function () {
 
 			// add/reset a array which capture pattern
 			iObj.patternAry = [];
+			
 
 			// remove last Obj
 			iObj.lastPosObj = null;
+
+			// var iObj = privateMap.get(this);
+
+			// iObj.rightPattern = pattern;
+			// if (!(iObj.rightPatterns.indexOf(pattern) >= 0)) {
+			// 	iObj.rightPatterns.push(iObj.rightPattern);
+			// }
+			// iObj.onSuccessCast[`${pattern}`] = success;
+			// iObj.onError = error || _util.noop;
+			
+			iObj.onError = _util.noop;
 
 			// remove error class if added
 			(0, _util.removeClass)(iObj.holder, 'patt-error');
@@ -343,7 +353,6 @@ var PatternLock = function () {
 				iObj.rightPatterns.push(iObj.rightPattern);
 			}
 			iObj.onSuccessCast[`${pattern}`] = success;
-			iObj.onFailedCast[`${pattern}`] = error;
 			iObj.onError = error || _util.noop;
 		}
 	}, {
@@ -457,6 +466,7 @@ var _initialiseProps = function _initialiseProps() {
 			});
 		}
 
+		// eslint-disable-next-line
 		if (idx && (option.allowRepeat && patternAry[patternAry.length - 1] !== pattId || patternAry.indexOf(pattId) === -1)) {
 			var elm = li[idx - 1];
 
@@ -471,7 +481,7 @@ var _initialiseProps = function _initialiseProps() {
 				var jp = lastPosObj.j;
 				var iDiff = Math.abs(posObj.i - ip);
 				var jDiff = Math.abs(posObj.j - jp);
-
+				// eslint-disable-next-line
 				while (iDiff === 0 && jDiff > 1 || jDiff === 0 && iDiff > 1 || jDiff === iDiff && jDiff > 1) {
 					ip = iDiff ? ip + xDelta : ip;
 					jp = jDiff ? jp + yDelta : jp;
