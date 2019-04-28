@@ -1,8 +1,9 @@
 import React, { Component } from "react"
 import PatternLock from './patternLock';
+import CastingButton from './components/castingButton/';
 
 class Runefield extends Component {
-
+  
   constructor() {
     super()
     this.state = {
@@ -22,7 +23,6 @@ class Runefield extends Component {
     this.lock = new PatternLock("#patternContainer");
 
     Object.keys(this.spellbook).map(key => {
-
       console.log(key, this.spellbook[key]);
       let number = `${this.spellbook[key].toString()}`;
       console.log(number);
@@ -32,21 +32,14 @@ class Runefield extends Component {
         alert("You have failed! take 2 damage");
       });
     })
-
   }
-
-
-
-
-
 
   render() {
     return (
-      <div>
-
+      <div className="b-pattern">
         <div id="patternContainer">
-
         </div>
+        <CastingButton />
       </div>
     )
   }

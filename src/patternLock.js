@@ -30,12 +30,13 @@ var PatternLockInternal = function () {
 		this.lastPosObj = [];
 		this.rightPattern = null;
 		this.rightPatterns = [];
-		this.onSuccess = _util.noop;
 		this.onError = _util.noop;
 		this.pattCircle = null;
 		this.lineX1 = 0;
 		this.lineY1 = 0;
 		this.line = null;
+		this.onSuccessCast = {};
+		this.onFailedCast = {};
 		this.lastPosObj = null;
 	}
 
@@ -341,8 +342,8 @@ var PatternLock = function () {
 			if (!(iObj.rightPatterns.indexOf(pattern) >= 0)) {
 				iObj.rightPatterns.push(iObj.rightPattern);
 			}
-			console.log(iObj.rightPatterns);
-			iObj.onSuccess = success || _util.noop;
+			iObj.onSuccessCast[`${pattern}`] = success;
+			iObj.onFailedCast[`${pattern}`] = error;
 			iObj.onError = error || _util.noop;
 		}
 	}, {
@@ -528,7 +529,7 @@ var _initialiseProps = function _initialiseProps() {
 
 		if (iObj.rightPattern) {
 			if ((pattern === iObj.rightPattern) || (iObj.rightPatterns.indexOf(pattern) >= 0)) {
-				iObj.onSuccess();
+				return iObj.onSuccessCast[`${pattern}`].call();
 			} else {
 				iObj.onError();
 				_this.error();
