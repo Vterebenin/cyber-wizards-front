@@ -34,6 +34,12 @@ class Runefield extends Component {
       healingWard: 1234,
       healingWard2: 1237,
     }
+    this.bookOfFire = {
+      fireball: 123,
+      fireArmor: 169873,
+      scorch: 1234,
+      Radiance: 1237,
+    }
   }
 
   componentDidMount() {
